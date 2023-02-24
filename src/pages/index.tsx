@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { useEffect,useState } from "react";
+
+
 
 const catImages: string[] = [
   "https://cdn2.thecatapi.com/images/bpc.jpg",
@@ -11,9 +13,17 @@ const RandomCatImage=(): string =>{
   return catImages[index];
 };
 
+const fetchCatImage=async()=>{
+  const res=await fetch("https://api.thecatapi.com/v1/images/search");
+  const result=await res.json
+  return result[0];
+}
+fetchCatImage().then((image)=>{
+  console.log("猫の画像:${image.url}");
+})
 
 const IndexPage=()=>{
-  const [catImageUrl,setCatImageUrl]=useState("https://cdn2.thecatapi.com/images/bpc.jpg");
+  const [catImageUrl,setCatImageUrl]=useState<string | undefined>(undefined);
 
   const handleClick=()=>{
     setCatImageUrl(RandomCatImage());
