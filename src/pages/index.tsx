@@ -33,15 +33,16 @@ const fetchCatImage=async():Promise<SearchCatImage> =>{
   return result[0];
 }
 fetchCatImage().then((image)=>{
-  console.log(image.alt)
+  console.log(image.url)
   console.log("猫の画像:${image.url}");
 })
 
 const IndexPage=()=>{
   const [catImageUrl,setCatImageUrl]=useState<string | undefined>(undefined);
 
-  const handleClick=()=>{
-    setCatImageUrl(RandomCatImage());
+  const handleClick=async()=>{
+    const image=await fetchCatImage();
+    setCatImageUrl(image.url);
   }
   return (
     <div>
